@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>FINALEXAM</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Jquery -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    </head>
+    <body>
+        <div>PERSONAL </div><hr/>
+        
+        <script>
+            
+            function post() {
+                const url = "http://localhost:8080/POST";
+                let id = document.getElementById("id").value;
+		let nik = document.getElementById("nik").value;
+		let nama = document.getElementById("nama").value;
+                let tl = document.getElementById("tl").value;
+                let photo = document.getElementById("photo").value;
+		let dataText = {"id":id,"nik":nik,"nama":nama, "tl":tl};
+		let dataJson = JSON.stringify(dataText).concat(photo);
+                
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: dataJson,
+                    contentType: 'application/json',
+                    dataType: 'text',
+                    success: function (result) {
+                        document.getElementById("viewer").innerHTML = result;
+                    }
+                });
+            }
+            
+            function put() {
+                
+                const urlp = "http://localhost:8080/PUT";
+                
+                let id = document.getElementById("id").value;
+		let nik = document.getElementById("nik").value;
+		let nama = document.getElementById("nama").value;
+                let tl = document.getElementById("tl").value;
+		let dataText = {"id":id,"nik":nik,"nama":nama, "tl":tl};
+		let dataJson = JSON.stringify(dataText);
+                
+                $.ajax({
+                    url: urlp,
+                    method: 'PUT',
+                    data: dataJson,
+                    contentType: 'application/json',
+                    dataType: 'text',
+                    success: function (result) {
+                        document.getElementById("viewer").innerHTML = result;
+                    }
+                });
+            }
+            
+            function get(){
+                const urlg = "http://localhost:8080/GET";
+                $.ajax({
+                    url: urlg,
+                    method: 'GET',
+                    dataType: 'text',
+                    success: function (result) {
+                        document.getElementById("viewer").innerHTML = result;
+                    }
+                });
+            }
+            
+            function del() {
+                
+                const urlg = "http://localhost:8080/DELETE";
+                let id = document.getElementById("id").value;
+		let nik = document.getElementById("nik").value;
+		let nama = document.getElementById("nama").value;
+                let tl = document.getElementById("tl").value;
+		let dataText = {"id":id,"nik":nik,"nama":nama, "tl":tl};
+		let dataJson = JSON.stringify(dataText);
+                $.ajax({
+                        url: urlg,
+                        method: 'DELETE',
+                        data: dataJson,
+                        contentType: 'application/json',
+                        dataType: 'text',
+                        success: function(result){
+                                document.getElementById("viewer").innerHTML = result;
+                        }
+                });
+            }
+            
+            
+        </script>
+        
+        <table>
+            <tr>
+                <td>id</td>
+                <td><input type="text" id="id" name="id"/></td>
+            </tr>
+            
+            <tr>
+                <td>nik</td>
+                <td><input type="text" id="nik" name="nik"/></td>
+            </tr>
+            
+            <tr>
+                <td>nama</td>
+                <td><input type="text" id="nama" name="nama"/></td>
+            </tr>
+            
+            <tr>
+                <td>tl</td>
+                <td><input type="date" id="tl" name="tl"/></td>
+            </tr>
+            <tr>
+                <td>Photo</td>
+                <td><input type="file" id="photo" name="photo"/></td>
+            </tr>
+            
+            <tr>
+                <td>timestamp</td>
+                <td><input type="time" id="timestamp" name="timestamp"/></td>
+            </tr>
+            
+            <tr>
+                <td><button onclick="get()">GET</button> <br/></td>
+                <td><button onclick="post()">CREATE</button> <br/></td>
+            </tr>
+            
+            <tr>
+                <td><button onclick="put()">EDIT</button> <br/></td>
+                <td><button onclick="del()">DELETE</button><br/></td>
+            </tr>
+        </table>
+        
+        
+        <hr/>
+        <div id="viewer"></div>
+    </body>
+</html>
